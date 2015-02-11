@@ -8,6 +8,14 @@ import string
 movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
 
+def getPredictedRating(userID,movieID):
+	return float(movieRatingCache[int(movieID)])
+
+def getRealRating(userID,movieID):
+	return float(answersCache[movieID][userID])
+
+def getRMSE(sqrtSum,numElements):
+	return round(((sqrtSum)/numElements)**0.5,2)
 
 #read in a line
 movieID = ""
@@ -21,14 +29,15 @@ for line in fileinput.input():
 	else:
 		#we are predicting the rating userID gave to movieID
 		userID = line.rstrip()
-		predictedRating = float(movieRatingCache[int(movieID)])
+		predictedRating = getPredictedRating(userID,movieID)
 		print(round(predictedRating,2))
-		realRating = float(answersCache[movieID][userID])
+		realRating = getRealRating(userID,movieID)
 		diff = predictedRating - realRating
 		sqrtSum += diff **2
 		count+=1
-sqrtError = round(((sqrtSum)/count)**0.5,2)
-print ("RMSE: " + str(sqrtError))
+
+print ("RMSE: " + str(getRMSE(sqrtSum,count)))
+
 
 
 
