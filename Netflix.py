@@ -24,7 +24,7 @@ def getPredictedRating(userID,movieID):
 	userAvgRating = 0
 	try:
 		#we have data about the user
-		userAvgRating = float(userAverageRatingCache[userID])
+		userAvgRating = float(userAverageRatingCache[str(userID)])
 		return (userAvgRating+movieAvgRating)/2
 	except KeyError:
 		#we dont have data about the user. so just use the average for that movie
@@ -68,6 +68,7 @@ def netflixRatingPredictor():
 
 	print ("RMSE: " + str(getRMSE(sqrtSum,count)))
 	print("misses: " + str(numMisses[0]))
+	print("entries: " + str(count))
 
 
 
