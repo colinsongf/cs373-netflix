@@ -14,7 +14,8 @@ numMisses = [0]
 movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
 userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
-movieYear = json.load(open('yearlyMovieCache.json','r'))
+movieYearCache = json.load(open('yearlyMovieCache.json','r'))
+yearAverageCache = json.load(open('yearAverageCache.json','r'))
 
 def getPredictedRating(userID,movieID):
 	userID = int(userID)
@@ -26,7 +27,10 @@ def getPredictedRating(userID,movieID):
 	try:
 		#we have data about the user
 		userAvgRating = float(userAverageRatingCache[str(userID)])
-		return (userAvgRating*0.2+movieAvgRating*0.8)
+		year = movieYearCache[str(movieID)]
+		yearAverage = float(yearAverageCache[year])
+		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
+		return (userAvgRating*0.35+movieAvgRating*0.45+yearAverage*0.0)
 	except KeyError:
 		#we dont have data about the user. so just use the average for that movie
 		numMisses[0]+=1
