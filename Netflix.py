@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import sys 
 import json 
 import fileinput
@@ -8,17 +9,28 @@ import string
 CUSTOMER_ID_LIMIT = 2649429
 MOVIE_ID_LIMIT = 17770
 
+numMisses = [0]
+
 movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
+userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
 
 def getPredictedRating(userID,movieID):
 	userID = int(userID)
 	movieID = int(movieID)
-
 	assert movieID >= 1 and movieID <= MOVIE_ID_LIMIT 
-	return float(movieRatingCache[int(movieID)])
-	
 
+	movieAvgRating = float(movieRatingCache[movieID])
+	userAvgRating = 0
+	try:
+		#we have data about the user
+		userAvgRating = float(userAverageRatingCache[userID])
+		return (userAvgRating+movieAvgRating)/2
+	except KeyError:
+		#we dont have data about the user. so just use the average for that movie
+		numMisses[0]+=1
+		return movieAvgRating
+	
 def getRealRating(userID,movieID):
 	userID = int(userID)
 	movieID = int(movieID)
@@ -55,10 +67,11 @@ def netflixRatingPredictor():
 			count+=1
 
 	print ("RMSE: " + str(getRMSE(sqrtSum,count)))
-
+	print("misses: " + str(numMisses[0]))
 
 
 
 if __name__ == "__main__" :
-    netflixRatingPredictor()
+	netflixRatingPredictor()
+
 
