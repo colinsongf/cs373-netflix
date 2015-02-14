@@ -12,20 +12,23 @@ movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
 
 def getPredictedRating(userID,movieID):
-	#print("getPredicted is called")
-	assert int(movieID) > 0 and int(movieID) <= MOVIE_ID_LIMIT 
-	try:
-		#print(float(movieRatingCache[int(movieID)]))
-		return float(movieRatingCache[int(movieID)])
-	except Exception:
-		print('Invalid input')
+	userID = int(userID)
+	movieID = int(movieID)
+
+	assert movieID >= 1 and movieID <= MOVIE_ID_LIMIT 
+	return float(movieRatingCache[int(movieID)])
+	
 
 def getRealRating(userID,movieID):
-	#print("getRealRating gets called")
-	#assert userID > 0 and userID <= CUSTOMER_ID_LIMIT
-	
-		#print(float(answersCache[str(movieID)][str(userID)])
-	return float(answersCache[str(movieID)][str(userID)])
+	userID = int(userID)
+	movieID = int(movieID)
+
+	assert movieID >=1  and movieID <= MOVIE_ID_LIMIT
+	assert userID >= 1 and userID <= CUSTOMER_ID_LIMIT 	
+	try:
+		return float(answersCache[str(movieID)][str(userID)])
+	except KeyError:
+		return 0
 	
 
 def getRMSE(sqrtSum,numElements):

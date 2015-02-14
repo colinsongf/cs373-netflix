@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from io       import StringIO
 from unittest import main, TestCase
 
@@ -5,39 +7,29 @@ import Netflix
 
 from Netflix import getPredictedRating, getRealRating, getRMSE
 # -----------
-# TestCollatz
+# TestNetflix
 # -----------
 
 class TestNetflix (TestCase) :
     # ----
     # get predicted Rating
     # ----
-    
     def test_getPredictedRating_1 (self) :
         movieID    = "2684"
-        userID     = "1"
+        userID     = 1
         i = getPredictedRating(movieID,userID)
-        print(i)
-
-        self.assertTrue( 1 <= i <= 5)
+        self.assertTrue(1 <= i <= 5)
 
     def test_getPredictedRating_2 (self) :
-        movieID    = "5000"
+        movieID    = "wdfasdf"
         userID     = "1"
-        i = getPredictedRating(movieID, userID)
-        print(i)
-
-        self.assertTrue(1 <= i <= 5)
+        self.assertRaises(ValueError,getPredictedRating,movieID,userID)
 
     def test_getPredictedRating_3 (self) :
         movieID    = "6000"
-        userID     = "1"
-        i = getPredictedRating(movieID,userID)
-        print(i)
-        # should raise an exception for an out of range 
-        #self.assertRaises(Exception, getPredictedRating, movieID)
-        self.assertTrue(1 <= i <= 5)
-
+        userID     = "0"
+        self.assertRaises(AssertionError,getPredictedRating,movieID,userID)
+       
     # ----
     # get Real Ratings
     # ----
@@ -45,27 +37,27 @@ class TestNetflix (TestCase) :
     def test_getRealRatings_1 (self) :
         movieID    = '1234'
         userID     = '599906'
-        
-        #i =  float(answersCache[str(movieID)][str(userID)])
-        i = getRealRating(movieID,userID)
-        print("test_getRealRatings_1")
-        print(i)
-        #self.assertTrue(1 <= i <= 5)
+        i = getRealRating(userID,movieID)
+        self.assertTrue(1 <= i <= 5)
 
     def test_getRealRating_2 (self) :
+        #look for an entry that does not exist.
         movieID    = "5400"
-        userID     = "2134385"
-        i = getRealRating(movieID,userID)
-        print(i)
-        #self.assertTrue(1 <= i <= 5)
-        """
+        userID     = "0"
+        self.assertRaises(AssertionError,getRealRating,userID,movieID)
+
+        
     def test_getRealRating_3 (self) :
-        movieID    = "18000\n"
-        userID     = " 1\n"
-        i = getRealRating(movieID,serI))
-        print(i)
-        #self.assertRaises(Exception, getRealRating, movieID)
-        """
+        movieID    = "1800"
+        userID     = "lol\n"
+        self.assertRaises(ValueError,getRealRating,userID,movieID)
+
+    def test_getRealRating_4 (self) :
+        movieID    = "1234"
+        userID     = "1234"
+        i = getRealRating(userID,movieID)
+        self.assertTrue(i == 0)
+
 
     
 
