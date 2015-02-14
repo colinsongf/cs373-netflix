@@ -14,6 +14,7 @@ numMisses = [0]
 movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
 userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
+movieYear = json.load(open('yearlyMovieCache.json','r'))
 
 def getPredictedRating(userID,movieID):
 	userID = int(userID)
@@ -25,7 +26,7 @@ def getPredictedRating(userID,movieID):
 	try:
 		#we have data about the user
 		userAvgRating = float(userAverageRatingCache[str(userID)])
-		return (userAvgRating+movieAvgRating)/2
+		return (userAvgRating*0.2+movieAvgRating*0.8)
 	except KeyError:
 		#we dont have data about the user. so just use the average for that movie
 		numMisses[0]+=1
@@ -60,7 +61,6 @@ def netflixRatingPredictor():
 			#we are predicting the rating userID gave to movieID
 			userID = line.rstrip()
 			predictedRating = getPredictedRating(int(userID),int (movieID))
-			#print(round(predictedRating,2))
 			realRating = getRealRating(userID,movieID)
 			diff = predictedRating - realRating
 			sqrtSum += diff **2
