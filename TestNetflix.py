@@ -58,8 +58,27 @@ class TestNetflix (TestCase) :
         i = getRealRating(userID,movieID)
         self.assertTrue(i == 0)
 
+    # ----
+    # Calculate Root Mean Squared Error
+    # ----
+    def test_getRMSE_1 (self) :
+        squareRootsum    = 0.358302
+        numElements     = 7
+        i = getRMSE(squareRootsum,numElements)
+        self.assertEqual(i, 0.23)
 
-    
+    def test_getRMSE_2 (self) :
+        squareRootsum    = 97
+        numElements     = 2
+        i = getRMSE(squareRootsum,numElements)
+        self.assertEqual(i, 6.93)
+
+        
+    def test_getRMSE_3 (self) :
+        squareRootsum    = 40
+        numElements     = 5
+        i = getRMSE(squareRootsum,numElements)
+        self.assertEqual(i, 2.83)
 
 # ----
 # main
