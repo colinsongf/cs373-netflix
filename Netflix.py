@@ -17,6 +17,20 @@ userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
 movieYearCache = json.load(open('yearlyMovieCache.json','r'))
 yearAverageCache = json.load(open('yearAverageCache.json','r'))
 
+def netflix_cache_gen (cache, fileObject):
+    """
+    cache is a pointer to the list to build the cache in
+    fileObject is the input cache file
+    returns parsed list
+    """    
+    for line in fileObject: 
+        line = line.strip()
+        (itemID, rating) = line.split(" ")
+        assert int(itemID) >= 1 and int(itemID) <= 2649429
+        assert float(rating) >= 1.0 and float(rating) <= 5.0
+        cache[int(itemID)] = float(rating)
+    fileObject.close()
+
 def getPredictedRating(userID,movieID):
 	userID = int(userID)
 	movieID = int(movieID)
@@ -29,8 +43,18 @@ def getPredictedRating(userID,movieID):
 		userAvgRating = float(userAverageRatingCache[str(userID)])
 		year = movieYearCache[str(movieID)]
 		yearAverage = float(yearAverageCache[year])
+		overallAvg = 3.623
 		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
-		return (userAvgRating*0.35+movieAvgRating*0.45+yearAverage*0.0)
+		#prediction = (overallAvg + (userAvgRating-(overallAvg))+ (movieAvgRating-(overallAvg)))
+		prediction = userAvgRating + movieAvgRating - overallAvg
+		if(prediction < 1):
+			prediction =1
+		if(prediction > 5):
+			prediction = 5
+
+		return prediction
+
+
 	except KeyError:
 		#we dont have data about the user. so just use the average for that movie
 		numMisses[0]+=1
