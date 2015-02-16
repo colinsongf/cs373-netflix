@@ -8,11 +8,10 @@ import string
 
 CUSTOMER_ID_LIMIT = 2649429
 MOVIE_ID_LIMIT = 17770
-overallAvg = 3.623
 
 numMisses = [0]
 
-movieRatingCache = json.load(open('movieAverageCache.json', 'r'))
+movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
 userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
 movieYearCache = json.load(open('yearlyMovieCache.json','r'))
@@ -37,21 +36,13 @@ def getPredictedRating(userID,movieID):
 	movieID = int(movieID)
 	assert movieID >= 1 and movieID <= MOVIE_ID_LIMIT 
 
-	movieAvgRating = float(movieRatingCache[str(movieID)])
+	movieAvgRating = float(movieRatingCache[movieID])
 	userAvgRating = 0
 	try:
 		#we have data about the user
 		userAvgRating = float(userAverageRatingCache[str(userID)])
-<<<<<<< HEAD
-		#year = movieYearCache[str(movieID)]
-		#yearAverage = float(yearAverageCache[year])
-		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
-		return (overallAvg + (userAvgRating-overallAvg)+ (movieAvgRating-overallAvg))
-	except KeyError as e:
-=======
-		year = movieYearCache[str(movieID)]
-		yearAverage = float(yearAverageCache[year])
-		overallAvg = 3.623
+		
+		overallAvg = 3.6
 		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
 		#prediction = (overallAvg + (userAvgRating-(overallAvg))+ (movieAvgRating-(overallAvg)))
 		prediction = userAvgRating + movieAvgRating - overallAvg
@@ -64,11 +55,8 @@ def getPredictedRating(userID,movieID):
 
 
 	except KeyError:
->>>>>>> b128fb13463b210f397503e19739efe63ad005e5
 		#we dont have data about the user. so just use the average for that movie
 		numMisses[0]+=1
-		print("missed: " + str(movieID) + " or " + str(userID))
-		print("KeyError: " + str(e) )
 		return movieAvgRating
 	
 def getRealRating(userID,movieID):
@@ -105,7 +93,7 @@ def netflixRatingPredictor():
 			sqrtSum += diff **2
 			count+=1
 
-	print("RMSE: " + str(getRMSE(sqrtSum,count)))
+	print ("RMSE: " + str(getRMSE(sqrtSum,count)))
 	print("misses: " + str(numMisses[0]))
 	print("entries: " + str(count))
 
