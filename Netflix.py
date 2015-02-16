@@ -6,34 +6,38 @@ import fileinput
 import math
 import string
 
+#limits provided  by project specs
 CUSTOMER_ID_LIMIT = 2649429
 MOVIE_ID_LIMIT = 17770
 
+#recommended in the following article on the project page: http://www.science20.com/random_walk/predicting_movie_ratings_math_won_netflix_prize
+OVERALL_MOVIE_RATINGS_AVG = 3.7
+
+
+#List of movieID or userID that were not in out caches
 numMisses = [0]
 
+#A cache that holds a mapping between movie ID and an average of all ratings for this movie
 movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
-answersCache = json.load(open('pma459-answersCache.json', 'r'))
-userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
-movieYearCache = json.load(open('yearlyMovieCache.json','r'))
-yearAverageCache = json.load(open('yearAverageCache.json','r'))
 
-def netflix_cache_gen (cache, fileObject):
-    """
-    cache is a pointer to the list to build the cache in
-    fileObject is the input cache file
-    returns parsed list
-    """    
-    for line in fileObject: 
-        line = line.strip()
-        (itemID, rating) = line.split(" ")
-        assert int(itemID) >= 1 and int(itemID) <= 2649429
-        assert float(rating) >= 1.0 and float(rating) <= 5.0
-        cache[int(itemID)] = float(rating)
-    fileObject.close()
+#A cache that holds accurate ratings for each movie 
+answersCache = json.load(open('pma459-answersCache.json', 'r'))
+
+#A cache that holds a mapping between user/customer ID and an average rating it gives to movies in general
+userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
+
+# -----------
+# getPredictedRating
+# -----------
+
 
 def getPredictedRating(userID,movieID):
+	"""
+	TO DO : describe this when finished with the exact rating
+	"""
 	userID = int(userID)
 	movieID = int(movieID)
+
 	assert movieID >= 1 and movieID <= MOVIE_ID_LIMIT 
 
 	movieAvgRating = float(movieRatingCache[movieID])
@@ -41,25 +45,30 @@ def getPredictedRating(userID,movieID):
 	try:
 		#we have data about the user
 		userAvgRating = float(userAverageRatingCache[str(userID)])
-		
-		overallAvg = 3.6
+
 		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
 		#prediction = (overallAvg + (userAvgRating-(overallAvg))+ (movieAvgRating-(overallAvg)))
-		prediction = userAvgRating + movieAvgRating - overallAvg
+		prediction = userAvgRating  + movieAvgRating - OVERALL_MOVIE_RATINGS_AVG
+		
 		if(prediction < 1):
 			prediction =1
 		if(prediction > 5):
 			prediction = 5
-
 		return prediction
-
 
 	except KeyError:
 		#we dont have data about the user. so just use the average for that movie
 		numMisses[0]+=1
 		return movieAvgRating
-	
+
+# -----------
+# getRealRating
+# -----------	
 def getRealRating(userID,movieID):
+	"""
+	It returns the actual rating that we want to get as close to. If the rating does not exist then we
+	return a 0.
+	"""
 	userID = int(userID)
 	movieID = int(movieID)
 
