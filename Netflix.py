@@ -8,10 +8,11 @@ import string
 
 CUSTOMER_ID_LIMIT = 2649429
 MOVIE_ID_LIMIT = 17770
+overallAvg = 3.623
 
 numMisses = [0]
 
-movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
+movieRatingCache = json.load(open('movieAverageCache.json', 'r'))
 answersCache = json.load(open('pma459-answersCache.json', 'r'))
 userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
 movieYearCache = json.load(open('yearlyMovieCache.json','r'))
@@ -22,18 +23,20 @@ def getPredictedRating(userID,movieID):
 	movieID = int(movieID)
 	assert movieID >= 1 and movieID <= MOVIE_ID_LIMIT 
 
-	movieAvgRating = float(movieRatingCache[movieID])
+	movieAvgRating = float(movieRatingCache[str(movieID)])
 	userAvgRating = 0
 	try:
 		#we have data about the user
 		userAvgRating = float(userAverageRatingCache[str(userID)])
-		year = movieYearCache[str(movieID)]
-		yearAverage = float(yearAverageCache[year])
+		#year = movieYearCache[str(movieID)]
+		#yearAverage = float(yearAverageCache[year])
 		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
-		return (userAvgRating*0.35+movieAvgRating*0.45+yearAverage*0.0)
-	except KeyError:
+		return (overallAvg + (userAvgRating-overallAvg)+ (movieAvgRating-overallAvg))
+	except KeyError as e:
 		#we dont have data about the user. so just use the average for that movie
 		numMisses[0]+=1
+		print("missed: " + str(movieID) + " or " + str(userID))
+		print("KeyError: " + str(e) )
 		return movieAvgRating
 	
 def getRealRating(userID,movieID):
@@ -70,7 +73,7 @@ def netflixRatingPredictor():
 			sqrtSum += diff **2
 			count+=1
 
-	print ("RMSE: " + str(getRMSE(sqrtSum,count)))
+	print("RMSE: " + str(getRMSE(sqrtSum,count)))
 	print("misses: " + str(numMisses[0]))
 	print("entries: " + str(count))
 

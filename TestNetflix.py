@@ -3,8 +3,6 @@
 from io       import StringIO
 from unittest import main, TestCase
 
-import Netflix
-
 from Netflix import getPredictedRating, getRealRating, getRMSE
 # -----------
 # TestNetflix
