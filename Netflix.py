@@ -79,11 +79,23 @@ def getRealRating(userID,movieID):
 	except KeyError:
 		return 0
 	
-
+# -----------
+# getRMSE
+# -----------	
 def getRMSE(sqrtSum,numElements):
+	"""
+	Calculates the root mean squared error of a given sum of squared difference 
+	and return a floating point round to two decimal points
+	"""
 	return round(((sqrtSum)/numElements)**0.5,2)
 
+# -----------
+# netflixRatingPredictor 
+# -----------	
 def netflixRatingPredictor():
+	"""
+	TODO: Describe this function in detail 
+	"""
 	#read in a line
 	movieID = ""
 	sqrtSum = 0
@@ -110,5 +122,7 @@ def netflixRatingPredictor():
 
 if __name__ == "__main__" :
 	netflixRatingPredictor()
+
+
 
 
