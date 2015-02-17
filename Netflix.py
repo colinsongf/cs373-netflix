@@ -26,6 +26,12 @@ answersCache = json.load(open('pma459-answersCache.json', 'r'))
 #A cache that holds a mapping between user/customer ID and an average rating it gives to movies in general
 userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
 
+#A cache that holds a mapping between user/customer ID and the ratings he gives for each decade
+userDecadeAverageCache = json.load(open('cdm2697-userRatingsAveragedOver10yInterval.json', 'r'))
+
+#A cache that holds a mapping between movie and year
+movieYearCache = json.load(open('af22574-movieDates.json'))
+
 # -----------
 # getPredictedRating
 # -----------
@@ -43,9 +49,126 @@ def getPredictedRating(userID,movieID):
 	movieAvgRating = float(movieRatingCache[movieID])
 	userAvgRating = 0
 	try:
-		#we have data about the user
 		userAvgRating = float(userAverageRatingCache[str(userID)])
+		year = 0
+		try:
+			year = int(movieYearCache[str(movieID)])
+			assert(year>=1890)
+			assert(year<=2010)
+			ratingsList = userDecadeAverageCache[str(userID)]
+			if(year>=1890 and year<1900):
+				found = False
+				for triplet in ratingsList:
+					if("1890" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1910):
+				found = False
+				for triplet in ratingsList:
+					if("1900" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1920):
+				found = False
+				for triplet in ratingsList:
+					if("1910" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1930):
+				found = False
+				for triplet in ratingsList:
+					if("1920" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1940):
+				found = False
+				for triplet in ratingsList:
+					if("1930" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1950):
+				found = False
+				for triplet in ratingsList:
+					if("1940" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1960):
+				found = False
+				for triplet in ratingsList:
+					if("1950" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1970):
+				found = False
+				for triplet in ratingsList:
+					if("1960" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1980):
+				found = False
+				for triplet in ratingsList:
+					if("1970" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<1990):
+				found = False
+				for triplet in ratingsList:
+					if("1980" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<2000):
+				found = False
+				for triplet in ratingsList:
+					if("1990" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+			elif(year<2010):
+				found = False
+				for triplet in ratingsList:
+					if("2000" in triplet[0]):
+						userAvgRating = float(triplet[1])
+						found = True
+						break
+				if(not found):
+					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
+				
 
+		except Exception as e:
+			print(e)
+			print("exception raised for userID: " + str(userID) + ", movieID: " + str(movieID))
 		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
 		#prediction = (overallAvg + (userAvgRating-(overallAvg))+ (movieAvgRating-(overallAvg)))
 		prediction = userAvgRating  + movieAvgRating - OVERALL_MOVIE_RATINGS_AVG
