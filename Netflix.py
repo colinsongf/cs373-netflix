@@ -13,23 +13,23 @@ MOVIE_ID_LIMIT = 17770
 OVERALL_MOVIE_RATINGS_AVG = 3.7
 
 
-#List of movieID or userID that were not in out caches
-numMisses = [0]
+#List of movieID or userID that were not in out caches. 0-noYear 1-noDecade 2-noUserData
+numMisses = [0,0,0]
 
 #A cache that holds a mapping between movie ID and an average of all ratings for this movie
-movieRatingCache = json.load(open('pma459-mvAvgCache.json', 'r'))
+movieRatingCache = json.load(open('caches/pma459-mvAvgCache.json', 'r'))
 
 #A cache that holds accurate ratings for each movie 
-answersCache = json.load(open('pma459-answersCache.json', 'r'))
+answersCache = json.load(open('caches/pma459-answersCache.json', 'r'))
 
 #A cache that holds a mapping between user/customer ID and an average rating it gives to movies in general
-userAverageRatingCache = json.load(open('pma459-usrAvgCache.json', 'r'))
+userAverageRatingCache = json.load(open('caches/pma459-usrAvgCache.json', 'r'))
 
 #A cache that holds a mapping between user/customer ID and the ratings he gives for each decade
-userDecadeAverageCache = json.load(open('cdm2697-userRatingsAveragedOver10yInterval.json', 'r'))
+userDecadeAverageCache = json.load(open('caches/cdm2697-userRatingsAveragedOver10yInterval-v2.json', 'r'))
 
 #A cache that holds a mapping between movie and year
-movieYearCache = json.load(open('af22574-movieDates.json'))
+movieYearCache = json.load(open('caches/af22574-movieDates.json'))
 
 # -----------
 # getPredictedRating
@@ -45,143 +45,61 @@ def getPredictedRating(userID,movieID):
 
 	assert movieID >= 1 and movieID <= MOVIE_ID_LIMIT 
 
-	movieAvgRating = float(movieRatingCache[movieID])
+	#the key parameters to our algorithm
+	movieAvgRating = 0
 	userAvgRating = 0
+	year = 0
+
+	#get the overall average of that movie
+	movieAvgRating = float(movieRatingCache[movieID])
+	assert (type(movieAvgRating)==float)
+
+	#find the year of the movie. If we dont have it then make userAvgRating just the average. If we dont have any info about that user, then use the movieAverage
+	foundYear = False
 	try:
-		userAvgRating = float(userAverageRatingCache[str(userID)])
-		year = 0
-		try:
-			year = int(movieYearCache[str(movieID)])
-			assert(year>=1890)
-			assert(year<=2010)
-			ratingsList = userDecadeAverageCache[str(userID)]
-			if(year>=1890 and year<1900):
-				found = False
-				for triplet in ratingsList:
-					if("1890" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1910):
-				found = False
-				for triplet in ratingsList:
-					if("1900" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1920):
-				found = False
-				for triplet in ratingsList:
-					if("1910" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1930):
-				found = False
-				for triplet in ratingsList:
-					if("1920" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1940):
-				found = False
-				for triplet in ratingsList:
-					if("1930" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1950):
-				found = False
-				for triplet in ratingsList:
-					if("1940" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1960):
-				found = False
-				for triplet in ratingsList:
-					if("1950" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1970):
-				found = False
-				for triplet in ratingsList:
-					if("1960" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1980):
-				found = False
-				for triplet in ratingsList:
-					if("1970" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<1990):
-				found = False
-				for triplet in ratingsList:
-					if("1980" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<2000):
-				found = False
-				for triplet in ratingsList:
-					if("1990" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-			elif(year<2010):
-				found = False
-				for triplet in ratingsList:
-					if("2000" in triplet[0]):
-						userAvgRating = float(triplet[1])
-						found = True
-						break
-				if(not found):
-					print("did not find entry for movieID: " + str(movieID) + ", userID: " + str(userID) + ", year: " + str(year) )
-				
-
-		except Exception as e:
-			print(e)
-			print("exception raised for userID: " + str(userID) + ", movieID: " + str(movieID))
-		#yearlyDeviation = 3.228-movieYearCache[str(movieID)]
-		#prediction = (overallAvg + (userAvgRating-(overallAvg))+ (movieAvgRating-(overallAvg)))
-		prediction = userAvgRating  + movieAvgRating - OVERALL_MOVIE_RATINGS_AVG
-		
-		if(prediction < 1):
-			prediction =1
-		if(prediction > 5):
-			prediction = 5
-		return prediction
-
-	except KeyError:
-		#we dont have data about the user. so just use the average for that movie
+		year = int(movieYearCache[str(movieID)]) ##if we cant the year of the movie, then just return the average rating
+		assert(year>=1890)
+		assert(year<=2010)
+		foundYear = True
+	except Exception:
 		numMisses[0]+=1
-		return movieAvgRating
+		if(str(userID) in userAverageRatingCache):
+			userAvgRating = float(userAverageRatingCache[str(userID)])
+		else:
+			userAvgRating = movieAverage
+			numMisses[2]+=1
+
+	#find the avg rating for that decade. If we cant find it, just assign the regular user average, if thats not possible, then just the movieAverage
+	
+	
+	if(str(userID) in userDecadeAverageCache and foundYear ):
+		ratingsList = userDecadeAverageCache[str(userID)]
+		decade = int(year/10)*10
+		assert(decade>=1890 and decade<=2000)
+		foundDecade = False
+		for triplet in ratingsList :
+			if(triplet[0] ==  decade):
+				userAvgRating = triplet[1]
+				foundDecade = True
+				break
+		if(not foundDecade):
+			numMisses[1]+=1
+			if(str(userID) in userAverageRatingCache):
+				userAvgRating = float(userAverageRatingCache[str(userID)])
+			else:
+				userAvgRating = movieAverage
+				numMisses[2]+=1
+			
+
+	prediction = userAvgRating  + movieAvgRating - OVERALL_MOVIE_RATINGS_AVG
+		
+	if(prediction < 1):
+		prediction =1
+	elif(prediction > 5):
+		prediction = 5
+	return prediction
+
+	
 
 # -----------
 # getRealRating
@@ -212,7 +130,7 @@ def getRMSE(sqrtSum,numElements):
 	return round(((sqrtSum)/numElements)**0.5,2)
 
 # ------------
-# collatz_read
+# netflixRead
 # ------------
 def netflixRead (s) :
 	"""
@@ -225,7 +143,9 @@ def netflixRead (s) :
 		return (True,s.split(":")[0])
 	else:
 		return (False,s.rstrip())
-
+# -----------
+# netflixPrint 
+# -----------	
 def netflixPrint (w, s, t) :
     """
     print three ints
@@ -233,12 +153,17 @@ def netflixPrint (w, s, t) :
     s the number to print
     t a boolean flag indicating if a movieID(True) or a userID(False) should be printed
     """
+
+
     if(t):
     	w.write(str(s)+":\n")
     else:
+    	s = round(float(s),1)
     	w.write(str(s)+"\n")
 
-	
+
+
+
 # -----------
 # netflixRatingPredictor 
 # -----------	
@@ -251,29 +176,20 @@ def netflixSolve(w,r):
 	movieID = ""
 	sqrtSum = 0
 	count = 0
-	for line in fileinput.input():
-		if ":" in line:
+	for line in r:
+		isMovieID,id = netflixRead(line)
+		if isMovieID:
 			#we have a new movie
-			movieID = line.split(":")[0]
-			#print(movieID + ":")
+			movieID = id
+			netflixPrint(w,movieID,True)
 		else:
 			#we are predicting the rating userID gave to movieID
-			userID = line.rstrip()
+			userID = id
 			predictedRating = getPredictedRating(int(userID),int (movieID))
 			realRating = getRealRating(userID,movieID)
 			diff = predictedRating - realRating
 			sqrtSum += diff **2
 			count+=1
+			netflixPrint(w,predictedRating,False)
 
-	print ("RMSE: " + str(getRMSE(sqrtSum,count)))
-	print("misses: " + str(numMisses[0]))
-	print("entries: " + str(count))
-
-
-
-if __name__ == "__main__" :
-	netflixRatingPredictor()
-
-
-
-
+	print("RMSE: " + str(getRMSE(sqrtSum,count)))
