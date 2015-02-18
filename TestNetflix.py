@@ -3,7 +3,7 @@
 from io       import StringIO
 from unittest import main, TestCase
 
-from Netflix import getPredictedRating, getRealRating, getRMSE
+from Netflix import getPredictedRating, getRealRating, getRMSE, netflixRead, netflixPrint
 # -----------
 # TestNetflix
 # -----------
@@ -78,6 +78,47 @@ class TestNetflix (TestCase) :
         i = getRMSE(squareRootsum,numElements)
         self.assertEqual(i, 2.83)
 
+    # ----
+    # Reading
+    # ----
+    def test_netflixRead1 (self) :
+        line = "1:\n"
+        returnValue = netflixRead(line)
+        self.assertEqual(returnValue[0], True)
+        self.assertEqual(returnValue[1], "1")
+
+    def test_netflixRead2 (self) :
+        line = "2:\n"
+        returnValue = netflixRead(line)
+        self.assertEqual(returnValue[0], True)
+        self.assertEqual(returnValue[1], "2")
+
+    def test_netflixRead3 (self) :
+        line = "30878\n"
+        returnValue = netflixRead(line)
+        self.assertEqual(returnValue[0], False)
+        self.assertEqual(returnValue[1], "30878")
+
+    def test_netflixPrint1 (self) :
+        w = StringIO()
+        s = "1.23"
+        t = False
+        netflixPrint(w,s,t)
+        self.assertEqual(w.getvalue(), "1.23\n")
+
+    def test_netflixPrint2 (self) :
+        w = StringIO()
+        s = 1.23123
+        t = False
+        netflixPrint(w,s,t)
+        self.assertEqual(w.getvalue(), "1.23123\n")
+
+    def test_netflixPrint3 (self) :
+        w = StringIO()
+        s = "1"
+        t = True
+        netflixPrint(w,s,t)
+        self.assertEqual(w.getvalue(), "1:\n")
 # ----
 # main
 # ----

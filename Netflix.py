@@ -3,8 +3,7 @@
 import sys 
 import json 
 import fileinput
-import math
-import string
+
 
 #limits provided  by project specs
 CUSTOMER_ID_LIMIT = 2649429
@@ -212,13 +211,42 @@ def getRMSE(sqrtSum,numElements):
 	"""
 	return round(((sqrtSum)/numElements)**0.5,2)
 
+# ------------
+# collatz_read
+# ------------
+def netflixRead (s) :
+	"""
+	s a string
+	parse a line in the input and see if its either a movieID or a rating.
+   	If it is a movieID return (True,movieID); if it is a userID, return (False,userID)
+	"""
+
+	if ":" in s:
+		return (True,s.split(":")[0])
+	else:
+		return (False,s.rstrip())
+
+def netflixPrint (w, s, t) :
+    """
+    print three ints
+    w a writer
+    s the number to print
+    t a boolean flag indicating if a movieID(True) or a userID(False) should be printed
+    """
+    if(t):
+    	w.write(str(s)+":\n")
+    else:
+    	w.write(str(s)+"\n")
+
+	
 # -----------
 # netflixRatingPredictor 
 # -----------	
-def netflixRatingPredictor():
+def netflixSolve(w,r):
 	"""
-	TODO: Describe this function in detail 
-	"""
+    r a reader
+    w a writer
+    """
 	#read in a line
 	movieID = ""
 	sqrtSum = 0
