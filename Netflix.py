@@ -38,7 +38,9 @@ movieYearCache = json.load(open('/u/mck782/netflix-tests/af22574-movieDates.json
 
 def getPredictedRating(userID,movieID):
 	"""
-	TO DO : describe this when finished with the exact rating
+	userID the id of the user
+	movieID the id of the movie
+	returns a predicted a rating based on our algorithm. It is based on the movie average, and how the user feels about movies within that decade
 	"""
 	userID = int(userID)
 	movieID = int(movieID)

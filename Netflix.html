@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Netflix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Netflix</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/v/filer4b/v38q001/jose/cs373-netflix/Netflix.py">/v/filer4b/v38q001/jose/cs373-netflix/Netflix.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="fileinput.html">fileinput</a><br>
+</td><td width="25%" valign=top><a href="json.html">json</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-getPredictedRating"><strong>getPredictedRating</strong></a>(userID, movieID)</dt><dd><tt>userID&nbsp;the&nbsp;id&nbsp;of&nbsp;the&nbsp;user<br>
+movieID&nbsp;the&nbsp;id&nbsp;of&nbsp;the&nbsp;movie<br>
+returns&nbsp;a&nbsp;predicted&nbsp;a&nbsp;rating&nbsp;based&nbsp;on&nbsp;our&nbsp;algorithm.&nbsp;It&nbsp;is&nbsp;based&nbsp;on&nbsp;the&nbsp;movie&nbsp;average,&nbsp;and&nbsp;how&nbsp;the&nbsp;user&nbsp;feels&nbsp;about&nbsp;movies&nbsp;within&nbsp;that&nbsp;decade</tt></dd></dl>
+ <dl><dt><a name="-getRMSE"><strong>getRMSE</strong></a>(sqrtSum, numElements)</dt><dd><tt>Calculates&nbsp;the&nbsp;root&nbsp;mean&nbsp;squared&nbsp;error&nbsp;of&nbsp;a&nbsp;given&nbsp;sum&nbsp;of&nbsp;squared&nbsp;difference&nbsp;<br>
+and&nbsp;return&nbsp;a&nbsp;floating&nbsp;point&nbsp;round&nbsp;to&nbsp;two&nbsp;decimal&nbsp;points</tt></dd></dl>
+ <dl><dt><a name="-getRealRating"><strong>getRealRating</strong></a>(userID, movieID)</dt><dd><tt>It&nbsp;returns&nbsp;the&nbsp;actual&nbsp;rating&nbsp;that&nbsp;we&nbsp;want&nbsp;to&nbsp;get&nbsp;as&nbsp;close&nbsp;to.&nbsp;If&nbsp;the&nbsp;rating&nbsp;does&nbsp;not&nbsp;exist&nbsp;then&nbsp;we<br>
+return&nbsp;a&nbsp;0.</tt></dd></dl>
+ <dl><dt><a name="-netflixPrint"><strong>netflixPrint</strong></a>(w, s, t)</dt><dd><tt>print&nbsp;three&nbsp;ints<br>
+w&nbsp;a&nbsp;writer<br>
+s&nbsp;the&nbsp;number&nbsp;to&nbsp;print<br>
+t&nbsp;a&nbsp;boolean&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;a&nbsp;movieID(True)&nbsp;or&nbsp;a&nbsp;userID(False)&nbsp;should&nbsp;be&nbsp;printed</tt></dd></dl>
+ <dl><dt><a name="-netflixRead"><strong>netflixRead</strong></a>(s)</dt><dd><tt>s&nbsp;a&nbsp;string<br>
+parse&nbsp;a&nbsp;line&nbsp;in&nbsp;the&nbsp;input&nbsp;and&nbsp;see&nbsp;if&nbsp;its&nbsp;either&nbsp;a&nbsp;movieID&nbsp;or&nbsp;a&nbsp;rating.<br>
+If&nbsp;it&nbsp;is&nbsp;a&nbsp;movieID&nbsp;return&nbsp;(True,movieID);&nbsp;if&nbsp;it&nbsp;is&nbsp;a&nbsp;userID,&nbsp;return&nbsp;(False,userID)</tt></dd></dl>
+ <dl><dt><a name="-netflixSolve"><strong>netflixSolve</strong></a>(w, r)</dt><dd><tt>r&nbsp;a&nbsp;reader<br>
+w&nbsp;a&nbsp;writer</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>CUSTOMER_ID_LIMIT</strong> = 2649429<br>
+<strong>MOVIE_ID_LIMIT</strong> = 17770<br>
+<strong>OVERALL_MOVIE_RATINGS_AVG</strong> = 3.7<br>
+<strong>__warningregistry__</strong> = {("unclosed file &lt;_io.TextIOWrapper name='/u/mck782...22574-movieDates.json' mode='r' encoding='UTF-8'&gt;", &lt;class 'ResourceWarning'&gt;, 32): True, ("unclosed file &lt;_io.TextIOWrapper name='/u/mck782...er10yInterval-v2.json' mode='r' encoding='UTF-8'&gt;", &lt;class 'ResourceWarning'&gt;, 29): True, ("unclosed file &lt;_io.TextIOWrapper name='/u/mck782...459-answersCache.json' mode='r' encoding='UTF-8'&gt;", &lt;class 'ResourceWarning'&gt;, 23): True, ("unclosed file &lt;_io.TextIOWrapper name='/u/mck782...ma459-mvAvgCache.json' mode='r' encoding='UTF-8'&gt;", &lt;class 'ResourceWarning'&gt;, 20): True, ("unclosed file &lt;_io.TextIOWrapper name='/u/mck782...a459-usrAvgCache.json' mode='r' encoding='UTF-8'&gt;", &lt;class 'ResourceWarning'&gt;, 26): True}<br>
+<strong>answersCache</strong> = {'1': {'1027056': 3, '1059319': 3, '1149588': 4, '1283744': 3, '1394012': 5, '1406595': 4, '14756': 4, '1682104': 4, '1772839': 5, '1774623': 4, ...}, '10': {'1531863': 3, '1952305': 3}, '1000': {'1002296': 5, '100291': 2, '1010534': 2, '1196779': 4, '1580442': 3, '1861759': 5, '1900790': 4, '1959111': 5, '1960212': 2, '2251189': 3, ...}, '10000': {'200206': 5, '523108': 4}, '10001': {'143866': 5, '1474804': 4, '1959883': 5, '220050': 4, '2305771': 5, '2350428': 5, '2417258': 5, '2570808': 5, '2609496': 4, '262828': 4, ...}, '10002': {'1213181': 4, '1450941': 5, '2581993': 5, '308502': 5}, '10003': {'1515111': 3}, '10004': {'1141242': 5, '1186407': 4, '119309': 5, '1257912': 3, '1262711': 3, '1263375': 5, '1270334': 5, '1291600': 4, '129495': 4, '1648424': 5, ...}, '10005': {'1892654': 4, '254775': 1, '469365': 5, '793736': 4, '926698': 3}, '10006': {'1093333': 4, '1534853': 5, '1632583': 5, '1982605': 5}, ...}<br>
+<strong>movieRatingCache</strong> = [0, 3.749542961608775, 3.5586206896551724, 3.6411530815109345, 2.73943661971831, 3.9192982456140353, 3.084396467124632, 2.129032258064516, 3.1898054996646548, 2.6210526315789475, 3.180722891566265, 3.0303030303030303, 3.4175824175824174, 4.552, 3.0254237288135593, 3.286206896551724, 3.0985550203779177, 2.90320765334834, 3.7843685879500093, 3.324675324675325, ...]<br>
+<strong>movieYearCache</strong> = {'1': '2003', '10': '2001', '100': '1993', '1000': '2002', '10000': '1995', '10001': '1994', '10002': '1937', '10003': '1981', '10004': '1995', '10005': '2004', ...}<br>
+<strong>numMisses</strong> = [0, 0, 0]<br>
+<strong>userAverageRatingCache</strong> = {'10': 3.3923076923076922, '100000': 4.2727272727272725, '1000004': 4.5, '1000027': 4.454545454545454, '1000033': 3.2941176470588234, '1000035': 4.409638554216867, '1000038': 3.6666666666666665, '1000051': 3.057142857142857, '1000053': 4.875, '1000057': 2.8461538461538463, ...}<br>
+<strong>userDecadeAverageCache</strong> = {'10': [[1940, 2.0, 1], [1950, 3.5, 2], [1960, 3.25, 4], [1970, 3.857142857142857, 7], [1980, 3.3333333333333335, 24], [1990, 3.675, 80], [2000, 3.232394366197183, 142]], '100000': [[1980, 5.0, 1], [1990, 4.333333333333333, 3], [2000, 4.142857142857143, 7]], '1000004': [[1980, 2.3333333333333335, 3], [1990, 4.647058823529412, 17], [2000, 4.833333333333333, 12]], '1000027': [[1960, 5.0, 1], [1970, 5.0, 2], [1980, 4.444444444444445, 9], [1990, 4.46, 50], [2000, 4.405405405405405, 37]], '1000033': [[1920, 3.0, 1], [1930, 4.0, 1], [1940, 4.0, 2], [1950, 4.25, 4], [1960, 3.76, 25], [1970, 3.1923076923076925, 26], [1980, 3.372093023255814, 43], [1990, 3.123456790123457, 81], [2000, 3.277992277992278, 259]], '1000035': [[1950, 5.0, 1], [1980, 5.0, 1], [1990, 4.9, 10], [2000, 4.323943661971831, 71]], '1000038': [[1970, 5.0, 1], [1980, 4.5, 4], [1990, 4.0, 1], [2000, 3.111111111111111, 9]], '1000051': [[1990, 3.3333333333333335, 3], [2000, 3.03125, 32]], '1000053': [[1990, 5.0, 3], [2000, 4.8, 5]], '1000057': [[1980, 3.0, 3], [1990, 2.7777777777777777, 9], [2000, 3.0, 1]], ...}</td></tr></table>
+</body></html>
