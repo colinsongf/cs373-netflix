@@ -189,6 +189,6 @@ def netflixSolve(w,r):
 			netflixPrint(w,predictedRating,False)
 
 	RMSE = getRMSE(sqrtSum,count)
-	w.write("RMSE: " + str(RMSE))
+	w.write("RMSE: " + str(RMSE) + "\n")
 	return RMSE
 
