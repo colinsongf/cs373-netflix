@@ -16,20 +16,20 @@ OVERALL_MOVIE_RATINGS_AVG = 3.7
 #List of movieID or userID that were not in out caches. 0-noYear 1-noDecade 2-noUserData
 numMisses = [0,0,0]
 
-#A cache that holds a mapping between movie ID and an average of all ratings for this movie
-movieRatingCache = json.load(open('/u/mck782/netflix-tests/pma459-mvAvgCache.json', 'r'))
+# #A cache that holds a mapping between movie ID and an average of all ratings for this movie
+# movieRatingCache = json.load(open('/u/mck782/netflix-tests/pma459-mvAvgCache.json', 'r'))
 
-#A cache that holds accurate ratings for each movie 
-answersCache = json.load(open('/u/mck782/netflix-tests/pma459-answersCache.json', 'r'))
+# #A cache that holds accurate ratings for each movie 
+# answersCache = json.load(open('/u/mck782/netflix-tests/pma459-answersCache.json', 'r'))
 
-#A cache that holds a mapping between user/customer ID and an average rating it gives to movies in general
-userAverageRatingCache = json.load(open('/u/mck782/netflix-tests/pma459-usrAvgCache.json', 'r'))
+# #A cache that holds a mapping between user/customer ID and an average rating it gives to movies in general
+# userAverageRatingCache = json.load(open('/u/mck782/netflix-tests/pma459-usrAvgCache.json', 'r'))
 
-#A cache that holds a mapping between user/customer ID and the ratings he gives for each decade
-userDecadeAverageCache = json.load(open('/u/mck782/netflix-tests/cdm2697-userRatingsAveragedOver10yInterval-v2.json', 'r'))
+# #A cache that holds a mapping between user/customer ID and the ratings he gives for each decade
+# userDecadeAverageCache = json.load(open('/u/mck782/netflix-tests/cdm2697-userRatingsAveragedOver10yInterval-v2.json', 'r'))
 
-#A cache that holds a mapping between movie and year
-movieYearCache = json.load(open('/u/mck782/netflix-tests/af22574-movieDates.json'))
+# #A cache that holds a mapping between movie and year
+# movieYearCache = json.load(open('/u/mck782/netflix-tests/af22574-movieDates.json'))
 
 # -----------
 # getPredictedRating
