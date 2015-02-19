@@ -71,7 +71,6 @@ def getPredictedRating(userID,movieID):
 
 	#find the avg rating for that decade. If we cant find it, just assign the regular user average, if thats not possible, then just the movieAverage
 	
-	
 	if(str(userID) in userDecadeAverageCache and foundYear ):
 		ratingsList = userDecadeAverageCache[str(userID)]
 		decade = int(year/10)*10
@@ -98,8 +97,6 @@ def getPredictedRating(userID,movieID):
 	elif(prediction > 5):
 		prediction = 5
 	return prediction
-
-	
 
 # -----------
 # getRealRating
@@ -143,9 +140,11 @@ def netflixRead (s) :
 		return (True,s.split(":")[0])
 	else:
 		return (False,s.rstrip())
+
 # -----------
 # netflixPrint 
 # -----------	
+
 def netflixPrint (w, s, t) :
     """
     print three ints
@@ -160,9 +159,6 @@ def netflixPrint (w, s, t) :
     else:
     	s = round(float(s),1)
     	w.write(str(s)+"\n")
-
-
-
 
 # -----------
 # netflixRatingPredictor 
@@ -192,4 +188,7 @@ def netflixSolve(w,r):
 			count+=1
 			netflixPrint(w,predictedRating,False)
 
-	print("RMSE: " + str(getRMSE(sqrtSum,count)))
+	RMSE = getRMSE(sqrtSum,count)
+	w.write("RMSE: " + str(RMSE))
+	return RMSE
+
