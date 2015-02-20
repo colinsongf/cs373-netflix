@@ -78,12 +78,6 @@ class TestNetflix (TestCase) :
         i = getRMSE(squareRootsum,numElements)
         self.assertEqual(i, 2.83)
 
-    def test_getRMSE_4 (self) :
-        squareRootsum    = 100
-        numElements     = 100
-        i = getRMSE(squareRootsum,numElements)
-        self.assertEqual(str(i), "1.00")
-
 
     # ----
     # Reading

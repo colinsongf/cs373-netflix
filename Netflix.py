@@ -126,7 +126,7 @@ def getRMSE(sqrtSum,numElements):
 	Calculates the root mean squared error of a given sum of squared difference 
 	and return a floating point round to two decimal points
 	"""
-	return round(((sqrtSum)/numElements)**0.5,2)
+	return round((float((sqrtSum)/numElements))**0.5,2)
 
 # ------------
 # netflixRead
