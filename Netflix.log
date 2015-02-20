@@ -1,3 +1,27 @@
+commit d275473c94fc2d32d9896376fd1567b8deb38e13
+Author: Tehreem <fatima.tehreem@gmail.com>
+Date:   Thu Feb 19 19:53:03 2015 -0600
+
+    Repo clean up and all files fixed
+
+commit 485cb29cf6cc8a89d325d48c190ebc75cb11d896
+Author: Tehreem <fatima.tehreem@gmail.com>
+Date:   Thu Feb 19 18:58:46 2015 -0600
+
+    TestNEtflix.py indentation fixed but caches crashing for Netflix.py
+
+commit 611431eff0498146a4609b1d825f9d3dfa93f892
+Author: Tehreem <fatima.tehreem@gmail.com>
+Date:   Thu Feb 19 18:43:07 2015 -0600
+
+    changed TestNetflix.py but still needs fixing
+
+commit 81b265f490e0f32ea99f909841ce74a70565bd23
+Author: Tehreem <fatima.tehreem@gmail.com>
+Date:   Thu Feb 19 18:21:28 2015 -0600
+
+    Final commit with updated git log
+
 commit 20a51470498ab0542f1efc1843224c6650a63ad3
 Author: Tehreem <fatima.tehreem@gmail.com>
 Date:   Thu Feb 19 18:19:17 2015 -0600
